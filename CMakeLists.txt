@@ -21,15 +21,15 @@ if (WIN32)
     include_directories(D:\\software\\compilerandalgorithm\\z3\\z3-4.6.0-x86-win\\include)
 elseif(UNIX)
 
-    set(Qt5Widgets_DIR /home/kong/Qt/5.11.1/gcc_64/lib/cmake/Qt5Widgets)
+    set(Qt5Widgets_DIR /home/sqq/downloads/qt/5.11.1/gcc_64/lib/cmake/Qt5Widgets)
 
-    link_directories(/home/kong/CLionProjects/tinylog/lib)
-    link_directories(/home/kong/CLionProjects/tinyxml2/lib)
-    link_directories(/home/kong/CLionProjects/runtime-verification-system/lib)
+    link_directories(/home/sqq/CLionProjects/tinylog/lib)
+    link_directories(/home/sqq/CLionProjects/tinyxml2/lib)
+    link_directories(/home/sqq/CLionProjects/runtime-verification-system/lib)
 
-    include_directories(/home/kong/CLionProjects/tinylog/headers)
-    include_directories(/home/kong/CLionProjects/tinyxml2/headers)
-    include_directories(/home/kong/CLionProjects/runtime-verification-system/headers/DFA)
+    include_directories(/home/sqq/CLionProjects/tinylog/headers)
+    include_directories(/home/sqq/CLionProjects/tinyxml2/headers)
+    include_directories(/home/sqq/CLionProjects/runtime-verification-system/headers/DFA)
 endif()
 find_package(Qt5Widgets)
 

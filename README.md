@@ -35,15 +35,17 @@
 
 1. [**安装jdk 1.7**](http://blog.csdn.net/gatieme/article/details/52723931)
 2. **安装IntelliJ IDEA**
-3. **导入工程 EventSimulation4Java**
-    - 选择maven 确保lib目录下的jar包导入到工程中
-    - 修改DEFAULT_SERVER_IP，保证可以与该Server正常通信
+3. **导入工程 EventSimulation4Java** 
+
+    - 选择maven 确保lib目录下的jar包导入到工程中（打开IDEA开发工具，选择import project，进行导入）
+    - 修改DEFAULT_SERVER_IP（在EventSimulation4Java/src/main/java/Net/NetEventSend.java中，即服务器ip,目前为10.108.165.205），保证可以与该Server正常通信
     - 构建工程 File-Project Structure-Artifacts - “+” - JAR - Create JAR from Modules - Main Class
     - 在Project选项卡中选择 EventSimulation Directory for META-INF改为/home/kong/EventSimulation4Java/src 删掉/main/java
     - Build  Build - Build Artifasts - Build
-   File - Project Structure - Libraries - "+" - Java - linux_x64.jar
+   File - Project Structure - Libraries - "+" - Java - linux_x64.jar（lib/rxtx/RXTXcomm.jar）
     - 编译后会在项目根目录下生成out文件夹 其中包含EventSimulation4Java.jar
-    - 然后将整个工程文件夹发送到虚拟机中
+    - 然后将整个工程文件夹发送到虚拟机中(在终端执行如下命令：  
+    scp -r EventSimulation4Java vm@10.108.167.229:/home/vm  其中scp是linux系统下基于ssh登陆进行安全的远程文件拷贝命令，linux的scp命令可以在linux服务器之间复制文件和目录，-r作用是递归复制整个目录)  
 
 4. **安装CLion 安装CMake**
 5. [**安装z3**](https://github.com/Z3Prover/z3)
@@ -57,14 +59,20 @@
     - netfilter ------------------- 分支develop
     - mxGraph --------------------- 分支master http://github.com/cpys/mxGraph.git
 
-    - 各工程需要注意cmakelists中的路径，编译选项均为 build all
+    - 各工程需要注意cmakelists中的路径（修改CMakeLists.txt 文件中的相关路径，具体语法可百度CMakeLists.txt语法介绍），编译选项均为 build all
     - 编译顺序为 tinyxml2 -- tinylog -- runtime-verification-system -- IoTEventMonitorPlatform
     - 编译tinyxml2/tinylog/runtime-verification-system 会在lib中生成so文件
-    - 编译IoTEventMonitorPlatform时 header - NetfilterConf - 中的路径需要改为 netfilter工程的路径
+    - 编译IoTEventMonitorPlatform时 header - NetfilterConf - 中的路径需要改为 netfilter工程的路径  
+    在编译IoTEventMonitorPlatform时曾遇到如下问题：  
+    1、“QApplication: 没有那个文件或目录  
+      解决办法：下载安装Qt5.11.1并在～/.bashrc中配置环境变量  
+    2、fatal error: GL/gl.h: No such file or directory include <GL/gl.h>  
+    解决办法：在终端执行命令：sudo apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev  
 
 8. **IoTEventMonitorPlatform** 需要权限运行 可以选择
     - sudo运行CLion `sudo sh clion.sh`
-    - sudo 运行 IoTEventMonitorPlatform
+    - sudo 运行 IoTEventMonitorPlatform（在工程文件所在目录下执行：  
+    sudo ./IoTEventMonitorPlatform）
 9. **内核模块相关命令**
     - insmod 模块名.ko ---- 安装模块
     - dmesg  ------------- 查看安装的内核模块
@@ -102,7 +110,8 @@
     - 拷贝java memory中的jdk文件夹 确保jdk为1.7
 	可能添加源的方式行不通，使用解压方式
 2. 从宿主机中传送过来的文件夹EventSimulation4Java中，进入到EventSimulation4Java.jar所在目录
-    - 执行命令 `sudo java -Djava.library.path=pathof/RXTX -jar -Xint pathof/EventSimulation4Java.jar`
+    - 执行命令 `sudo java -Djava.library.path=pathof/RXTX -jar -Xint pathof/EventSimulation4Java.jar`（在.jar文件所在目录下执行:  
+    sudo java -Djava.library.path=/home/vm/EventSimulation4Java/lib/ -jar -Xint EventSimulation.jar）
 
 3. 运行EventSimulation程序
     - 如果错误提示 “没有清单主属性” 说明jar包打包有问题
